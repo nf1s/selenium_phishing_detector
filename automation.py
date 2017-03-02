@@ -13,6 +13,7 @@ from influxdb import InfluxDBClient
 import checkDomain
 # Instance of the web-driver is created and firefox will start
 # driver.get method will navigate firefox to the page requested
+from pymongo import mongo_client
 
 global_url = 'http://www.paypal.com/signin'
 
@@ -25,23 +26,26 @@ def check_exists_by_xpath(driver, xpath):
     return True
 
 
-def test_with_invalid_email_type(driver,test_email):
+def test_with_invalid_email_type(driver, test_email):
     email = driver.find_element_by_xpath("//input[@type='email']")
     email.send_keys(test_email)  # Your email_id
     email.send_keys(Keys.RETURN)
     WebDriverWait(driver, 5).until(EC.staleness_of(email))
 
-def test_with_invalid_email_id(driver,test_email):
+
+def test_with_invalid_email_id(driver, test_email):
     email = driver.find_element_by_xpath("//input[@id='email']")
     email.send_keys(test_email)  # Your email_id
     email.send_keys(Keys.RETURN)
     WebDriverWait(driver, 5).until(EC.staleness_of(email))
 
-def test_with_invalid_email_name(driver,test_email):
+
+def test_with_invalid_email_name(driver, test_email):
     email = driver.find_element_by_xpath("//input[@name='email']")
     email.send_keys(test_email)  # Your email_id
     email.send_keys(Keys.RETURN)
     WebDriverWait(driver, 5).until(EC.staleness_of(email))
+
 
 def test_with_invalid_password(driver):
     passwd = driver.find_element_by_xpath("//input[@type='password']")
@@ -154,7 +158,7 @@ def full_test(driver):
             elif email_name and not password:
                 test_with_invalid_email_name(driver, email_list[count])
 
-            elif password and not ( email_id or email_name or email_type):
+            elif password and not (email_id or email_name or email_type):
                 test_with_invalid_password(driver)
 
             else:
