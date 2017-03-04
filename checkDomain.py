@@ -54,19 +54,19 @@ def check_date_difference(cer_date,exp_date):
     print(days_since_creation)
     print(days_till_expiration)
 
-
-def run(uri):
-    domain = get_domain_from_uri(uri)
-    print(domain)
-    creation_date,expiration_date = check_whois(domain)
-    check_date_difference(creation_date,expiration_date)
-    ip_local = get_ips_for_host(domain)
-    ip_google_dns = get_Info_from_googleOpenDns(domain)
-
-    if ip_local == ip_google_dns:
-        print('domain match')
-    else:
-        print('Domain mismatch')
-
-
-run('http://www.facebook.com')
+#
+# def run(uri):
+#     domain = get_domain_from_uri(uri)
+#     print(domain)
+#     creation_date,expiration_date = check_whois(domain)
+#     check_date_difference(creation_date,expiration_date)
+#     ip_local = get_ips_for_host(domain)
+#     ip_google_dns = get_Info_from_googleOpenDns(domain)
+#
+#     if ip_local == ip_google_dns:
+#         print('domain match')
+#     else:
+#         print('Domain mismatch')
+#
+#
+# run('http://www.facebook.com')
