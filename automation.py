@@ -15,7 +15,8 @@ import checkDomain
 # driver.get method will navigate firefox to the page requested
 from pymongo import MongoClient
 
-global_url = 'https://www.icloud.com/'
+global_url = 'https://www.paypal.com/signin'
+
 
 
 def check_exists_by_xpath(driver, xpath):
@@ -106,6 +107,8 @@ def invalid_data_test_user_by_name(driver, test_email):
     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
     # driver will press the enter key.
+
+
 def invalid_data_test_username_by_name(driver, test_email):
     email = driver.find_element_by_xpath("//input[@name='username']")
     email.clear()
@@ -168,36 +171,40 @@ def to_influx_database(url, res):
         print(str(error))
 
 
+def check_domain_in_white_list(domain):
+    db_client = MongoClient()
+    db = db_client.phishing
+    cursor = db.whitelist.find_one({'legitimate.domain_name': domain})
+    return cursor
+
 def to_mongodb(domain):
     db_client = MongoClient()
     db = db_client.phishing
-
-    cursor = db.whitelist.find({"legitimate.domain_name":domain})
-
-    if not cursor:
-        db.whitelist.insert_one(
-            {
-                "legitimate":{
-                    "domain_name": domain
-                  }
+    db.whitelist.insert_one(
+        {
+            "legitimate": {
+                "domain_name": domain
             }
-        )
+        }
+    )
 
 
 def full_test(driver, domain_name):
-    email_type, email_id, email_name,\
-    user_id, user_name, username_name,\
+
+
+
+    email_type, email_id, email_name, \
+    user_id, user_name, username_name, \
     password = email_and_password_exits(driver)
 
     count = 0
     email_list = test_email_list()
 
-    driver.implicitly_wait(5)
-
     try:
         while password and count < 3:
 
             domain = checkDomain.get_domain_from_uri(driver.current_url)
+
 
             if email_type and password:
                 invalid_data_test_email_by_type(driver, email_list[count])
@@ -215,7 +222,7 @@ def full_test(driver, domain_name):
                 invalid_data_test_user_by_name(driver, email_list[count])
 
             elif username_name and password:
-                invalid_data_test_username_by_name(driver,email_list[count])
+                invalid_data_test_username_by_name(driver, email_list[count])
 
             elif email_type and not password:
                 test_with_invalid_email_type(driver, email_list[count])
@@ -263,13 +270,15 @@ def full_test(driver, domain_name):
 
 
 def run():
-
     driver = webdriver.Firefox()
     url = global_url
     driver.get(url)
     domain = checkDomain.get_domain_from_uri(url)
-    result = full_test(driver,domain)
-    to_influx_database(url, result)
+    domain_in_whiteList = check_domain_in_white_list(domain)
+    if domain_in_whiteList != None :
+        print('domain is legit and in whitelist')
+    else:
+        result = full_test(driver, domain)
+        to_influx_database(url, result)
     driver.quit()
-
 run()
