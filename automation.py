@@ -15,9 +15,7 @@ import checkDomain
 # driver.get method will navigate firefox to the page requested
 from pymongo import MongoClient
 
-global_url = 'https://www.paypal.com/signin'
-
-
+global_url = 'http://resolution-help-centers.com/www.sign-secure-update/mpp/signin/1e68/websrc'
 
 def check_exists_by_xpath(driver, xpath):
     try:
@@ -26,6 +24,7 @@ def check_exists_by_xpath(driver, xpath):
         return False
     return True
 
+#------ testing part -------------------------------------------------------------#
 
 def test_with_invalid_email_type(driver, test_email):
     email = driver.find_element_by_xpath("//input[@type='email']")
@@ -78,7 +77,7 @@ def invalid_data_test_email_by_id(driver, test_email):
 
 
 def invalid_data_test_email_by_name(driver, test_email):
-    email = driver.find_element_by_xpath("//input[@name='Email']")
+    email = driver.find_element_by_xpath("//input[@name='email']")
     email.clear()
     email.send_keys(test_email)  # Your email_id
     passwd = driver.find_element_by_xpath("//input[@type='password']")
@@ -120,6 +119,7 @@ def invalid_data_test_username_by_name(driver, test_email):
 
 
 def email_and_password_exits(driver):
+    input_tag = check_exists_by_xpath (driver, "//input")
     email_type = check_exists_by_xpath(driver, "//input[@type='email']")
     email_id = check_exists_by_xpath(driver, "//input[@id='email']")
     email_name = check_exists_by_xpath(driver, "//input[@name='email']")
@@ -128,7 +128,7 @@ def email_and_password_exits(driver):
     username_name = check_exists_by_xpath(driver, "//input[@name='username']")
     passwd = check_exists_by_xpath(driver, "//input[@type='password']")
 
-    return email_type, email_id, email_name, \
+    return  input_tag, email_type, email_id, email_name, \
            user_id, user_name, username_name, passwd
 
 
@@ -177,6 +177,7 @@ def check_domain_in_white_list(domain):
     cursor = db.whitelist.find_one({'legitimate.domain_name': domain})
     return cursor
 
+
 def to_mongodb(domain):
     db_client = MongoClient()
     db = db_client.phishing
@@ -191,9 +192,7 @@ def to_mongodb(domain):
 
 def full_test(driver, domain_name):
 
-
-
-    email_type, email_id, email_name, \
+    input_tag,email_type, email_id, email_name, \
     user_id, user_name, username_name, \
     password = email_and_password_exits(driver)
 
@@ -203,55 +202,59 @@ def full_test(driver, domain_name):
     try:
         while password and count < 3:
 
-            domain = checkDomain.get_domain_from_uri(driver.current_url)
+            if input_tag:
 
+                domain = checkDomain.get_domain_from_uri(driver.current_url)
 
-            if email_type and password:
-                invalid_data_test_email_by_type(driver, email_list[count])
+                if email_type and password:
+                    invalid_data_test_email_by_type(driver, email_list[count])
 
-            elif email_id and password:
-                invalid_data_test_email_by_id(driver, email_list[count])
+                elif email_id and password:
+                    invalid_data_test_email_by_id(driver, email_list[count])
 
-            elif email_name and password:
-                invalid_data_test_email_by_name(driver, email_list[count])
+                elif email_name and password:
+                    invalid_data_test_email_by_name(driver, email_list[count])
 
-            elif user_id and password:
-                invalid_data_test_user_by_id(driver, email_list[count])
+                elif user_id and password:
+                    invalid_data_test_user_by_id(driver, email_list[count])
 
-            elif user_name and password:
-                invalid_data_test_user_by_name(driver, email_list[count])
+                elif user_name and password:
+                    invalid_data_test_user_by_name(driver, email_list[count])
 
-            elif username_name and password:
-                invalid_data_test_username_by_name(driver, email_list[count])
+                elif username_name and password:
+                    invalid_data_test_username_by_name(driver, email_list[count])
 
-            elif email_type and not password:
-                test_with_invalid_email_type(driver, email_list[count])
+                elif email_type and not password:
+                    test_with_invalid_email_type(driver, email_list[count])
 
-            elif email_id and not password:
-                test_with_invalid_email_id(driver, email_list[count])
+                elif email_id and not password:
+                    test_with_invalid_email_id(driver, email_list[count])
 
-            elif email_name and not password:
-                test_with_invalid_email_name(driver, email_list[count])
+                elif email_name and not password:
+                    test_with_invalid_email_name(driver, email_list[count])
 
-            elif password and not (email_id or email_name or email_type):
-                test_with_invalid_password(driver)
+                elif password and not (email_id or email_name or email_type):
+                    test_with_invalid_password(driver)
+
+                else:
+                    break
+
+                newDomain = checkDomain.get_domain_from_uri(driver.current_url)
+
+                if newDomain != domain:
+                    print('this is a phishing website')
+                    break
+
+                count += 1
+
+                input_tag,email_type, email_id, email_name, \
+                user_id, user_name, username_name, \
+                password = email_and_password_exits(driver)
 
             else:
-                break
+                return 2
 
-            newDomain = checkDomain.get_domain_from_uri(driver.current_url)
-
-            if newDomain != domain:
-                print('this is a phishing website')
-                break
-
-            count += 1
-
-            email_type, email_id, email_name, \
-            user_id, user_name, username_name, \
-            password = email_and_password_exits(driver)
-
-        if count == 0 and (not email_type or not email_id or not email_name) and not password:
+        if count < 1 and (not email_type or not email_id or not email_name) and not password:
             print('this page has no login')
             return 2
 
@@ -275,10 +278,12 @@ def run():
     driver.get(url)
     domain = checkDomain.get_domain_from_uri(url)
     domain_in_whiteList = check_domain_in_white_list(domain)
-    if domain_in_whiteList != None :
+    if domain_in_whiteList != None:
         print('domain is legit and in whitelist')
     else:
         result = full_test(driver, domain)
         to_influx_database(url, result)
     driver.quit()
+
+
 run()
