@@ -3,8 +3,10 @@ import socket
 from dns import resolver
 import whois
 import datetime
-
+import json
 # Get domain from URI
+from influxdb import InfluxDBClient
+
 def get_domain_from_uri(uri):
 
     domain_name = urlparse(uri).hostname.split('.')
@@ -54,7 +56,7 @@ def check_date_difference(cer_date,exp_date):
     print(days_since_creation)
     print(days_till_expiration)
 
-#
+
 # def run(uri):
 #     domain = get_domain_from_uri(uri)
 #     print(domain)
@@ -67,6 +69,87 @@ def check_date_difference(cer_date,exp_date):
 #         print('domain match')
 #     else:
 #         print('Domain mismatch')
-#
-#
+
+
+
+def get_phishing_pages():
+
+    jsonFile = open('scraper/links-old.json', 'r')
+    data = json.load(jsonFile)
+    jsonFile.close()
+
+    link_array = []
+
+    for index in data:
+        link_array.append(index['url'])
+
+    print(len(link_array))
+    return link_array
+
+
+def get_legit_pages():
+    text_file = open("scraper/file.txt", "r")
+    lines = text_file.read().split('\n')
+    domains = []
+    for line in lines:
+        domains.append(line.replace(" ", ""))
+
+    return domains
+
+def to_influx_database(url, res):
+    if res == 1:
+        result = "phishing"
+    else:
+        result = "legitimate"
+
+
+    points = [
+
+        {
+            "measurement": result,
+            "tags": {
+                "browser": "firefox"
+            },
+            "fields": {
+                "url": url
+            }
+        }
+
+    ]
+
+    try:
+        db_client = InfluxDBClient('localhost', '8086',
+                                   'root', 'root', 'dns_module')
+        db_client.create_database('dns_module')
+        db_client.write_points(points)
+
+    except IOError as error:
+        print(str(error))
+
+
+
+def start():
+
+    # domains = get_legit_pages()
+    urls = get_phishing_pages()
+    for url in urls:
+        try:
+            domain = get_domain_from_uri(url)
+            print(domain)
+            # creation_date,expiration_date = check_whois(domain)
+            # check_date_difference(creation_date,expiration_date)
+            ip_local = get_ips_for_host(domain)
+            ip_google_dns = get_Info_from_googleOpenDns(domain)
+            if ip_local == ip_google_dns:
+                print('domain match')
+                to_influx_database(domain,0)
+            else:
+                print('Domain mismatch')
+                to_influx_database(domain,1)
+        except:
+            continue
+
+
+start()
+
 # run('http://www.facebook.com')
