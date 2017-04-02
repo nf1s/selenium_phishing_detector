@@ -150,6 +150,6 @@ def start():
             continue
 
 
-start()
+# start()
 
 # run('http://www.facebook.com')
