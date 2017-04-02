@@ -36,9 +36,6 @@ user_name_xpath = "//input[@name='user']"
 username_name_xpath = "//input[@name='username']"
 
 
-
-
-
 def test_fake_credentials(driver,test_email,xpath):
     try:
         user = driver.find_element_by_xpath(xpath)
@@ -46,115 +43,12 @@ def test_fake_credentials(driver,test_email,xpath):
     except ElementNotVisibleException:
         pass
 
-
 def test_fake_password(driver):
     passwd = driver.find_element_by_xpath("//input[@type='password']")
     passwd.send_keys("Hello12345")  # Your password
     passwd.send_keys(Keys.RETURN)
     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
-
-#
-# def test_with_invalid_email_type(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@type='email']")
-#     email.send_keys(test_email)  # Your email_id
-#     email.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(email))
-
-#
-# def test_with_invalid_email_id(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@id='email']")
-#     email.send_keys(test_email)  # Your email_id
-#     email.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(email))
-
-
-# def test_with_invalid_email_name(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@name='email']")
-#     email.send_keys(test_email)  # Your email_id
-#     email.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(email))
-
-
-# def test_with_invalid_password(driver):
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-#
-# def invalid_data_test_email_by_type(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@type='email']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-    # driver will press the enter key.
-
-#
-# def invalid_data_test_email_by_id(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@id='email']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-#
-# def invalid_data_test_email_by_name(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@name='email']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-#
-# def invalid_data_test_user_by_id(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@id='user']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-#
-# def invalid_data_test_user_by_name(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@name='user']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-    # driver will press the enter key.
-
-#
-# def invalid_data_test_username_by_name(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@name='username']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-#
-#
-# def invalid_data_test_text_field(driver, test_email):
-#     email = driver.find_element_by_xpath("//input[@type='text']")
-#     email.clear()
-#     email.send_keys(test_email)  # Your email_id
-#     passwd = driver.find_element_by_xpath("//input[@type='password']")
-#     passwd.send_keys("12345678")  # Your password
-#     passwd.send_keys(Keys.RETURN)
-#     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
 def email_and_password_exits(driver):
     input_tag = check_exists_by_xpath (driver, "//input")
@@ -170,45 +64,42 @@ def email_and_password_exits(driver):
     return  input_tag, text_type, email_type, email_id, email_name, \
            user_id, user_name, username_name, passwd
 
-
 def test_email_list():
     emails = ['first.last@name.com', 'bla@bla.com', 'python@great.com','happy@best.com']
     return emails
-#
-#
-# def to_influx_database(url, res):
-#     if res == 1:
-#         result = "phishing"
-#     elif res == 0:
-#         result = "legitimate"
-#     elif res == -1:
-#         result = "incomplete_test"
-#     else:
-#         result = "neutral"
-#
-#     points = [
-#
-#         {
-#             "measurement": result,
-#             "tags": {
-#                 "browser": "firefox"
-#             },
-#             "fields": {
-#                 "url": url
-#             }
-#         }
-#
-#     ]
-#
-#     try:
-#         db_client = InfluxDBClient('localhost', '8086',
-#                                    'root', 'root', 'phishing_db')
-#         db_client.create_database('phishing_db')
-#         db_client.write_points(points)
-#
-#     except IOError as error:
-#         print(str(error))
-#
+
+def to_influx_database(url, res):
+    if res == 1:
+        result = "phishing"
+    elif res == 0:
+        result = "legitimate"
+    elif res == -1:
+        result = "incomplete_test"
+    else:
+        result = "neutral"
+
+    points = [
+
+        {
+            "measurement": result,
+            "tags": {
+                "browser": "firefox"
+            },
+            "fields": {
+                "url": url
+            }
+        }
+
+    ]
+
+    try:
+        db_client = InfluxDBClient('localhost', '8086',
+                                   'root', 'root', 'phishing_db')
+        db_client.create_database('phishing_db')
+        db_client.write_points(points)
+
+    except IOError as error:
+        print(str(error))
 
 def check_domain_in_white_list(domain):
     db_client = MongoClient()
@@ -216,17 +107,16 @@ def check_domain_in_white_list(domain):
     cursor = db.whitelist.find_one({'legitimate.domain_name': domain})
     return cursor
 
-#
-# def to_mongodb(domain):
-#     db_client = MongoClient()
-#     db = db_client.phishing
-#     db.whitelist.insert_one(
-#         {
-#             "legitimate": {
-#                 "domain_name": domain
-#             }
-#         }
-#     )
+def to_mongodb(domain):
+    db_client = MongoClient()
+    db = db_client.phishing
+    db.whitelist.insert_one(
+        {
+            "legitimate": {
+                "domain_name": domain
+            }
+        }
+    )
 
 
 def get_domain_from_uri(uri):
@@ -274,6 +164,7 @@ def full_test(driver, domain_name):
 
                 test_fake_password(driver)
 
+
                 newDomain = get_domain_from_uri(driver.current_url)
 
                 if newDomain != domain:
@@ -296,24 +187,18 @@ def full_test(driver, domain_name):
     elif not password and count < 3:
         if not email_type or not email_id or not email_name:
             print('this is a phishing website due to test')
-            domain_name = ''
             return 1
     else:
         print('this is a legitimate page')
-        # to_mongodb(domain_name)
-        domain_name = ''
+        to_mongodb(domain_name)
         return 0
-
-
 
 def get_legitimate_pages():
     text_file = open("scraper/alexaTop500.txt", "r")
     lines = text_file.read().split('\n')
     return lines
 
-
 def get_phishing_pages():
-
     jsonFile = open('scraper/links-old.json', 'r')
     data = json.load(jsonFile)
     jsonFile.close()
@@ -327,7 +212,6 @@ def get_phishing_pages():
 
     return link_array
 
-
 def run():
     link_array = get_phishing_pages()
     old_link = ''
@@ -338,16 +222,17 @@ def run():
                 url = link
                 driver.get(url)
                 domain = get_domain_from_uri(url)
+                print(domain)
                 domain_in_whiteList = check_domain_in_white_list(domain)
                 if domain_in_whiteList != None:
                     print('domain is legit and in whitelist')
                 else:
                     result = full_test(driver, domain)
-                    # to_influx_database(url, result)
+                    to_influx_database(url, result)
 
             except TimeoutException:
                 print('incomplete test')
-                 #to_influx_database(link, -1)
+                to_influx_database(link, -1)
                 pass
             except WebDriverException:
                 print('unreachable')
@@ -357,7 +242,5 @@ def run():
                 continue
             driver.quit()
             old_link = link
-
-
 
 run()
