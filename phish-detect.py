@@ -8,16 +8,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import TimeoutException, WebDriverException, ErrorInResponseException
 from influxdb import InfluxDBClient
-# Instance of the web-driver is created and firefox will start
-# driver.get method will navigate firefox to the page requested
 from pymongo import MongoClient
 import json
 from urllib.parse import urlparse
 
-
-
+#selenium webdriver has no builtin function to check whether an element exists or not
+# this is why this function was implemented
+# it tries to find an element by xpath
+# if the element does not exist
+# NoSuchElementException will be raised and the function will catch that exception and
+# and return false
 def check_exists_by_xpath(driver, xpath):
     try:
         driver.find_element_by_xpath(xpath)
@@ -25,8 +27,9 @@ def check_exists_by_xpath(driver, xpath):
         return False
     return True
 
-#------ testing part -------------------------------------------------------------#
 
+#The elemnts that we need to interact with will be defined here
+# according to their Xpath
 text_type_xpath = "//input[@type='text']"
 email_type_xpath = "//input[@type='email']"
 email_id_xpath = "//input[@id='email']"
@@ -36,20 +39,9 @@ user_name_xpath = "//input[@name='user']"
 username_name_xpath = "//input[@name='username']"
 
 
-def test_fake_credentials(driver,test_email,xpath):
-    try:
-        user = driver.find_element_by_xpath(xpath)
-        user.send_keys(test_email)  # Your email_id
-    except ElementNotVisibleException:
-        pass
-
-def test_fake_password(driver):
-    passwd = driver.find_element_by_xpath("//input[@type='password']")
-    passwd.send_keys("Hello12345")  # Your password
-    passwd.send_keys(Keys.RETURN)
-    WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
-
-
+# this function will check the existance of all of the elements specified
+# and will return the ones that exists for testing
+#
 def email_and_password_exits(driver):
     input_tag = check_exists_by_xpath (driver, "//input")
     text_type = check_exists_by_xpath(driver, "//input[@type='text']")
@@ -63,6 +55,27 @@ def email_and_password_exits(driver):
 
     return  input_tag, text_type, email_type, email_id, email_name, \
            user_id, user_name, username_name, passwd
+#------ testing part -------------------------------------------------------------#
+
+# this function will take fake credentials (email, username .. etc)
+# and will first clear the text input field then add
+# the fake email
+def test_fake_credentials(driver,test_email,xpath):
+    try:
+        user = driver.find_element_by_xpath(xpath)
+        user.clear()
+        user.send_keys(test_email)  # Your email_id
+    except ElementNotVisibleException:
+        pass
+
+# this function will get the password type field and will input a fake password
+def test_fake_password(driver):
+    passwd = driver.find_element_by_xpath("//input[@type='password']")
+    passwd.send_keys("Hello12345")  # Your password
+    passwd.send_keys(Keys.RETURN)
+    WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
+
+
 
 def test_email_list():
     emails = ['first.last@name.com', 'bla@bla.com', 'python@great.com','happy@best.com']
@@ -120,7 +133,6 @@ def to_mongodb(domain):
 
 
 def get_domain_from_uri(uri):
-
     domain_name = urlparse(uri).hostname.split('.')
     domain = domain_name[-2] +'.'+ domain_name[-1]
     return domain
@@ -194,9 +206,13 @@ def full_test(driver, domain_name):
         return 0
 
 def get_legitimate_pages():
-    text_file = open("scraper/alexaTop500.txt", "r")
+    text_file = open("scraper/alexa.txt", "r")
     lines = text_file.read().split('\n')
-    return lines
+    links = []
+    for line in lines:
+        links.append('https://www.'+line)
+
+    return links
 
 def get_phishing_pages():
     jsonFile = open('scraper/links-old.json', 'r')
@@ -213,34 +229,46 @@ def get_phishing_pages():
     return link_array
 
 def run():
-    link_array = get_phishing_pages()
+    user_input = input("choose (l) for legitimate or (p) for phishing: ")
+    if user_input == 'p':
+        link_array = get_phishing_pages()
+    elif user_input == 'l':
+        link_array = get_legitimate_pages()
+    else:
+        link_array = get_phishing_pages()
     old_link = ''
     for link in link_array:
+        print(link)
         if link != old_link:
-            driver = webdriver.Firefox()
-            try:
-                url = link
-                driver.get(url)
-                domain = get_domain_from_uri(url)
-                print(domain)
-                domain_in_whiteList = check_domain_in_white_list(domain)
-                if domain_in_whiteList != None:
-                    print('domain is legit and in whitelist')
-                else:
-                    result = full_test(driver, domain)
-                    to_influx_database(url, result)
+            if link is not None and link != '':
+                driver = webdriver.Firefox()
+                try:
+                    url = link
+                    driver.get(url)
+                    domain = get_domain_from_uri(url)
+                    print(domain)
+                    domain_in_whiteList = check_domain_in_white_list(domain)
+                    if domain_in_whiteList != None:
+                        print('domain is legit and in whitelist')
+                    else:
+                        result = full_test(driver, domain)
+                        to_influx_database(url, result)
 
-            except TimeoutException:
-                print('incomplete test')
-                to_influx_database(link, -1)
-                pass
-            except WebDriverException:
-                print('unreachable')
-                pass
-            except:
-                print('random error')
-                continue
-            driver.quit()
-            old_link = link
+                except TimeoutException as error:
+                    print(error)
+                    to_influx_database(link, -1)
+                    pass
+                except WebDriverException as error:
+                    print(error)
+                    pass
+                except ValueError or TypeError or UnicodeDecodeError as error:
+                    print (error)
+                    continue
+                except Exception as error:
+                    print(error)
+                    continue
+
+                driver.quit()
+                old_link = link
 
 run()
