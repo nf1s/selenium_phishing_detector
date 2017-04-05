@@ -30,6 +30,7 @@ def check_exists_by_xpath(driver, xpath):
 
 #The elemnts that we need to interact with will be defined here
 # according to their Xpath
+input_tag_xpath = "//input"
 text_type_xpath = "//input[@type='text']"
 email_type_xpath = "//input[@type='email']"
 email_id_xpath = "//input[@id='email']"
@@ -37,21 +38,20 @@ email_name_xpath = "//input[@name='email']"
 userId_xpath = "//input[@id='user']"
 user_name_xpath = "//input[@name='user']"
 username_name_xpath = "//input[@name='username']"
-
+passwd_xpath = "//input[@type='password']"
 
 # this function will check the existance of all of the elements specified
 # and will return the ones that exists for testing
-#
 def email_and_password_exits(driver):
-    input_tag = check_exists_by_xpath (driver, "//input")
-    text_type = check_exists_by_xpath(driver, "//input[@type='text']")
-    email_type = check_exists_by_xpath(driver, "//input[@type='email']")
-    email_id = check_exists_by_xpath(driver, "//input[@id='email']")
-    email_name = check_exists_by_xpath(driver, "//input[@name='email']")
-    user_id = check_exists_by_xpath(driver, "//input[@id='user']")
-    user_name = check_exists_by_xpath(driver, "//input[@name='user']")
-    username_name = check_exists_by_xpath(driver, "//input[@name='username']")
-    passwd = check_exists_by_xpath(driver, "//input[@type='password']")
+    input_tag = check_exists_by_xpath (driver, input_tag_xpath)
+    text_type = check_exists_by_xpath(driver, text_type_xpath)
+    email_type = check_exists_by_xpath(driver, email_type_xpath)
+    email_id = check_exists_by_xpath(driver, email_id_xpath)
+    email_name = check_exists_by_xpath(driver, email_name_xpath)
+    user_id = check_exists_by_xpath(driver, userId_xpath)
+    user_name = check_exists_by_xpath(driver, user_name_xpath)
+    username_name = check_exists_by_xpath(driver, username_name_xpath)
+    passwd = check_exists_by_xpath(driver, passwd_xpath)
 
     return  input_tag, text_type, email_type, email_id, email_name, \
            user_id, user_name, username_name, passwd
@@ -70,17 +70,25 @@ def test_fake_credentials(driver,test_email,xpath):
 
 # this function will get the password type field and will input a fake password
 def test_fake_password(driver):
-    passwd = driver.find_element_by_xpath("//input[@type='password']")
+    passwd = driver.find_element_by_xpath(passwd_xpath)
     passwd.send_keys("Hello12345")  # Your password
     passwd.send_keys(Keys.RETURN)
     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
-
-
+# this function returns a list of fake emails for testing
 def test_email_list():
     emails = ['first.last@name.com', 'bla@bla.com', 'python@great.com','happy@best.com']
     return emails
 
+# Influx_db is a time series no sql databases which has the first field always as the current time the log
+# in our case it is used because of the ease of use
+#we have mainly 4 measurements
+# phishing for websites that are detected as phishing
+# legitimate for the websites that are detected as legitimate
+# if the website has no login or considered as neutral
+# if the website contains login yet for some reason the test could not complete
+# it is considered as incomplete_test
+# this function takes the url and sends it to the influxdb under its corresponding measurement
 def to_influx_database(url, res):
     if res == 1:
         result = "phishing"
@@ -114,12 +122,9 @@ def to_influx_database(url, res):
     except IOError as error:
         print(str(error))
 
-def check_domain_in_white_list(domain):
-    db_client = MongoClient()
-    db = db_client.phishing
-    cursor = db.whitelist.find_one({'legitimate.domain_name': domain})
-    return cursor
-
+# this function is called whenever a legitimate website
+# needs to be added to our whitelist which is hosted in this mongodb
+# the domain will be added under the collection *legitimate* in phishing database name
 def to_mongodb(domain):
     db_client = MongoClient()
     db = db_client.phishing
@@ -131,22 +136,35 @@ def to_mongodb(domain):
         }
     )
 
+# this function fetchs the mongodb white list for domains
+# to check if it already resides in the whitelist
+def check_domain_in_white_list(domain):
+    db_client = MongoClient()
+    db = db_client.phishing
+    cursor = db.whitelist.find_one({'legitimate.domain_name': domain})
+    return cursor
 
+# function mainly strips domain from protocol header and path
+# to be saved in the white list later
 def get_domain_from_uri(uri):
     domain_name = urlparse(uri).hostname.split('.')
     domain = domain_name[-2] +'.'+ domain_name[-1]
     return domain
 
+# here is our main testing function
 def full_test(driver, domain_name):
 
+    # returns all elements that we are interested in
     input_tag, text_type, email_type, email_id, email_name, \
     user_id, user_name, username_name, \
     password = email_and_password_exits(driver)
 
+    # getting the fake email list
     count = 0
     email_list = test_email_list()
 
-
+    # the loop will continue to test the website as long as
+    # there is an input field and password
     while input_tag and count < 4:
 
         if password:
@@ -176,7 +194,8 @@ def full_test(driver, domain_name):
 
                 test_fake_password(driver)
 
-
+                # if selenium injects the website with an email and password
+                # and a redirect occurs this is for sure a phishing website
                 newDomain = get_domain_from_uri(driver.current_url)
 
                 if newDomain != domain:
@@ -184,36 +203,49 @@ def full_test(driver, domain_name):
                     return 1
                 else:
                     count += 1
-
+                    #rechecking again what are the elements exist in the page before the next iteration
                     input_tag,text_type, email_type, email_id, email_name, \
                     user_id, user_name, username_name, \
                     password = email_and_password_exits(driver)
 
         else:
             break
-
+    #if this was the first iteration and there is not login fields
+    # then this page has no login
     if count < 1 and (not email_type or not email_id or not email_name) and not password:
         print('this page has no login')
         return 2
 
+    # if after a couple of emails there are no more password field exists?
+    # then the website is a phishing one
     elif not password and count < 3:
         if not email_type or not email_id or not email_name:
             print('this is a phishing website due to test')
             return 1
-    else:
+    # if the loop continued till the end and password still exits
+    # this website passes the test and is considered as legit
+    elif password and count >=3 :
         print('this is a legitimate page')
         to_mongodb(domain_name)
         return 0
 
+    else:
+        print('random error')
+
+# our scraper for alexsa 500 saves the legit websites in a text file
+# this function opens the txt file, extracts the domains and append it to an array
 def get_legitimate_pages():
     text_file = open("scraper/alexa.txt", "r")
     lines = text_file.read().split('\n')
     links = []
     for line in lines:
         links.append('https://www.'+line)
-
     return links
 
+# our ruby scraper will scrape phishtank and will return all phishing links
+# in JSON form mait in 'links-old.json' file
+# this function will open the josn file and parse
+# the url links to an array
 def get_phishing_pages():
     jsonFile = open('scraper/links-old.json', 'r')
     data = json.load(jsonFile)
@@ -228,6 +260,12 @@ def get_phishing_pages():
 
     return link_array
 
+# this is our main function
+# user will be prompt to input whether he wants to test legitimate or phishing page
+# the function will extract domain from url and check if it is in white list
+# if domains exits the webdriver will close the firefox window session
+# if domain does not exit then it will be tested by 'full_test' function
+# then it will be logged
 def run():
     user_input = input("choose (l) for legitimate or (p) for phishing: ")
     if user_input == 'p':
