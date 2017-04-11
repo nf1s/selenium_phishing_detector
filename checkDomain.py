@@ -130,11 +130,12 @@ def to_influx_database(url, res):
 
 def start():
 
-    # domains = get_legit_pages()
-    urls = get_phishing_pages()
+    urls = get_legit_pages()
+    #urls = get_phishing_pages()
     for url in urls:
         try:
-            domain = get_domain_from_uri(url)
+            #domain = get_domain_from_uri(url)
+            domain = url
             print(domain)
             # creation_date,expiration_date = check_whois(domain)
             # check_date_difference(creation_date,expiration_date)
@@ -150,6 +151,6 @@ def start():
             continue
 
 
-# start()
+start()
 
 # run('http://www.facebook.com')
