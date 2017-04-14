@@ -245,15 +245,28 @@ def full_test(driver, domain_name, url):
 
 # our scraper for alexsa 500 saves the legit websites in a text file
 # this function opens the txt file, extracts the domains and append it to an array
-def get_legitimate_pages():
-    text_file = open("scraper/alexa_login.txt", "r")
-    lines = text_file.read().split('\n')
+# def get_legitimate_pages():
+#     text_file = open("scraper/alexa_login.txt", "r")
+#     lines = text_file.read().split('\n')
+#     return lines
 
-    return lines
+def get_legitimate_pages():
+    jsonFile = open('scraper/legit_pages.json', 'r')
+    data = json.load(jsonFile)
+    jsonFile.close()
+    print(type(data))
+    link_array = []
+
+    for index in data:
+        link_array.append(index['result'])
+
+    print((link_array))
+
+    # return link_array
 
 # our ruby scraper will scrape phishtank and will return all phishing links
 # in JSON form mait in 'links-old.json' file
-# this function will open the josn file and parse
+# this function will open the json file and parse
 # the url links to an array
 def get_phishing_pages():
     jsonFile = open('scraper/links-old.json', 'r')
