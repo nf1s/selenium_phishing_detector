@@ -78,7 +78,7 @@ def test_fake_password(driver):
 
 # this function returns a list of fake emails for testing
 def test_email_list():
-    emails = ['first.last@name.com', 'bla@bla.com', 'python@great.com','happy@best.com']
+    emails = ['some_email@nicedomain.com', 'happy.forever@best.com', 'python@great.com', 'first.last@name.com']
     return emails
 
 # Influx_db is a time series no sql databases which has the first field always as the current time the log
@@ -166,7 +166,7 @@ def full_test(driver, domain_name, url):
 
     # the loop will continue to test the website as long as
     # there is an input field and password
-    while input_tag and count < 4:
+    while input_tag and count < 3:
 
         if password:
 
@@ -219,13 +219,13 @@ def full_test(driver, domain_name, url):
 
     # if after a couple of emails there are no more password field exists?
     # then the website is a phishing one
-    elif not password and count < 3:
+    elif not password and count < 2:
         if not email_type or not email_id or not email_name:
             print('this is a phishing website due to test')
             return 1
     # if the loop continued till the end and password still exits
     # this website passes the test and is considered as legit
-    elif password and count >=3 :
+    elif password and count >=2 :
         print('this is a legitimate page')
         to_mongodb(domain_name,url)
         return 0
@@ -238,10 +238,8 @@ def full_test(driver, domain_name, url):
 def get_legitimate_pages():
     text_file = open("scraper/alexa_login.txt", "r")
     lines = text_file.read().split('\n')
-    links = []
-    for line in lines:
-        links.append('https://www.'+line)
-    return links
+
+    return lines
 
 # our ruby scraper will scrape phishtank and will return all phishing links
 # in JSON form mait in 'links-old.json' file

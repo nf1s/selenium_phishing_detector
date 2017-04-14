@@ -53735,3 +53735,105 @@ JavaScript error: http://imsolutionsva.com/adobe/PDF_files/chr104_002.htm, line 
 1492198761291	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
 1492198761293	geckodriver::marionette	INFO	Connecting to Marionette on localhost:41747
 1492198762105	Marionette	INFO	Listening on port 41747
+1492198847476	geckodriver	INFO	Listening on 127.0.0.1:36315
+1492198848466	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.R5YemVQv1LNi
+1492198848467	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1492198848477	geckodriver::marionette	INFO	Connecting to Marionette on localhost:37931
+1492198849349	Marionette	INFO	Listening on port 37931
+1492198851710	Marionette	INFO	New connections will no longer be accepted
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 5223] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5223] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+[Child 5223] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+1492198851792	geckodriver	INFO	Listening on 127.0.0.1:52066
+1492198852772	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.akmMuGX1KfKL
+1492198852774	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1492198852779	geckodriver::marionette	INFO	Connecting to Marionette on localhost:38419
+1492198853627	Marionette	INFO	Listening on port 38419
+1492198855802	Marionette	INFO	New connections will no longer be accepted
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 5304] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5304] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+[Child 5304] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+1492198855863	geckodriver	INFO	Listening on 127.0.0.1:56124
+1492198856861	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.Coz2XcXmbr6Z
+1492198856863	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1492198856867	geckodriver::marionette	INFO	Connecting to Marionette on localhost:35814
+1492198857706	Marionette	INFO	Listening on port 35814
+1492198859933	Marionette	INFO	New connections will no longer be accepted
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 5384] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5384] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+[Child 5384] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+1492198860012	geckodriver	INFO	Listening on 127.0.0.1:38871
+1492198860994	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.kXyeDqzs8GAm
+1492198860995	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1492198861002	geckodriver::marionette	INFO	Connecting to Marionette on localhost:32999
+1492198892697	geckodriver	INFO	Listening on 127.0.0.1:52975
+1492198893688	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.kHuiNShzvNUu
+1492198893691	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1492198893693	geckodriver::marionette	INFO	Connecting to Marionette on localhost:34831
+1492198894571	Marionette	INFO	Listening on port 34831
+1492198899064	Marionette	INFO	New connections will no longer be accepted
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 5512] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5512] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+[Child 5512] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+1492198899139	geckodriver	INFO	Listening on 127.0.0.1:42385
+1492198900134	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.FZJZOrJcIdTg
+1492198900136	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1492198900139	geckodriver::marionette	INFO	Connecting to Marionette on localhost:38261
+1492198900947	Marionette	INFO	Listening on port 38261
+[Child 5607] WARNING: pipe error (29): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5607] WARNING: pipe error (17): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5607] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 322
+[Child 5607] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
+[Child 5607] ###!!! ABORT: Aborting on channel error.: file /build/firefox-bLMGaO/firefox-52.0.2+build1/ipc/glue/MessageChannel.cpp, line 2143
