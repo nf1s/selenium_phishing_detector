@@ -236,7 +236,7 @@ def full_test(driver, domain_name, url):
 # our scraper for alexsa 500 saves the legit websites in a text file
 # this function opens the txt file, extracts the domains and append it to an array
 def get_legitimate_pages():
-    text_file = open("scraper/alexa.txt", "r")
+    text_file = open("scraper/alexa_login.txt", "r")
     lines = text_file.read().split('\n')
     links = []
     for line in lines:
