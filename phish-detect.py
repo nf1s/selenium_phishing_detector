@@ -149,9 +149,8 @@ def check_domain_in_white_list(domain):
 # function mainly strips domain from protocol header and path
 # to be saved in the white list later
 def get_domain_from_uri(uri):
-    domain_name = urlparse(uri).hostname.split('.')
-    domain = domain_name[-2] +'.'+ domain_name[-1]
-    return domain
+    domain_name = urlparse(uri).hostname
+    return domain_name
 
 # here is our main testing function
 def full_test(driver, domain_name, url):
@@ -176,22 +175,22 @@ def full_test(driver, domain_name, url):
                 if email_type:
                     test_fake_credentials(driver, email_list[count],email_type_xpath)
 
-                if email_id:
+                elif email_id:
                     test_fake_credentials(driver, email_list[count],email_id_xpath)
 
-                if email_name:
+                elif email_name:
                     test_fake_credentials(driver, email_list[count],email_name_xpath)
 
-                if user_id:
+                elif user_id:
                     test_fake_credentials(driver, email_list[count],userId_xpath)
 
-                if user_name:
+                elif user_name:
                     test_fake_credentials(driver, email_list[count],user_name_xpath)
 
-                if username_name:
+                elif username_name:
                     test_fake_credentials(driver, email_list[count],username_name_xpath)
 
-                if text_type :
+                elif text_type :
                     test_fake_credentials(driver, email_list[count],text_type_xpath)
 
                 test_fake_password(driver)
