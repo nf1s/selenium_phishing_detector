@@ -68,7 +68,9 @@ def test_fake_credentials(driver,test_email,xpath,count):
         user = driver.find_element_by_xpath(xpath)
         if count > 0:
             try:
-                user.clear()
+                # user.clear()
+                user.send_keys(Keys.CONTROL + "a")
+                user.send_keys(Keys.DELETE)
             except:
                 pass
         user.send_keys(test_email)  # Your email_id
@@ -81,6 +83,8 @@ def test_fake_password(driver,count):
     if count > 0:
         try:
             passwd.clear()
+            passwd.send_keys(Keys.CONTROL + "a")
+            passwd.send_keys(Keys.DELETE)
         except:
             pass
     passwd.send_keys("Hello12345")  # Your password
@@ -322,17 +326,17 @@ def run():
                         to_influx_database(url, result)
 
                 except TimeoutException as error:
-                    print(error)
+                    print('there is a timeout exception here'+str(error))
                     to_influx_database(link, -1)
                     pass
                 except WebDriverException as error:
-                    print(error)
+                    print('webdriver exception here'+str(error))
                     pass
                 except ValueError or TypeError or UnicodeDecodeError as error:
-                    print (error)
+                    print ('value error or type error: ' +str(error))
                     continue
                 except Exception as error:
-                    print(error)
+                    print('total random exception: '+str(error))
                     continue
 
                 driver.quit()
