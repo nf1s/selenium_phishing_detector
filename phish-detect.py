@@ -74,6 +74,7 @@ def test_fake_password(driver):
     passwd = driver.find_element_by_xpath(passwd_xpath)
     passwd.send_keys("Hello12345")  # Your password
     passwd.send_keys(Keys.RETURN)
+    WebDriverWait(driver, 2)
     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
 # this function returns a list of fake emails for testing
@@ -288,6 +289,7 @@ def run():
                     if domain_in_whiteList != None:
                         print('domain is legit and in whitelist')
                     else:
+                        WebDriverWait(driver,2)
                         result = full_test(driver, domain, url)
                         to_influx_database(url, result)
 

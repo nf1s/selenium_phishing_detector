@@ -1,4 +1,4 @@
-https://www.facebook.com/login.php
+https://www.facebook.com
 https://twitter.com/login/
 https://accounts.google.com
 https://www.linkedin.com/uas/login?goback=&trk=hb_signin
