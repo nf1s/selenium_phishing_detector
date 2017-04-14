@@ -125,13 +125,14 @@ def to_influx_database(url, res):
 # this function is called whenever a legitimate website
 # needs to be added to our whitelist which is hosted in this mongodb
 # the domain will be added under the collection *legitimate* in phishing database name
-def to_mongodb(domain):
+def to_mongodb(domain,url):
     db_client = MongoClient()
     db = db_client.phishing
     db.whitelist.insert_one(
         {
             "legitimate": {
-                "domain_name": domain
+                "domain_name": domain,
+                "url": url
             }
         }
     )
@@ -152,7 +153,7 @@ def get_domain_from_uri(uri):
     return domain
 
 # here is our main testing function
-def full_test(driver, domain_name):
+def full_test(driver, domain_name, url):
 
     # returns all elements that we are interested in
     input_tag, text_type, email_type, email_id, email_name, \
@@ -226,7 +227,7 @@ def full_test(driver, domain_name):
     # this website passes the test and is considered as legit
     elif password and count >=3 :
         print('this is a legitimate page')
-        to_mongodb(domain_name)
+        to_mongodb(domain_name,url)
         return 0
 
     else:
@@ -289,7 +290,7 @@ def run():
                     if domain_in_whiteList != None:
                         print('domain is legit and in whitelist')
                     else:
-                        result = full_test(driver, domain)
+                        result = full_test(driver, domain, url)
                         to_influx_database(url, result)
 
                 except TimeoutException as error:
