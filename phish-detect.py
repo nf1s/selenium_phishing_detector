@@ -14,13 +14,15 @@ from influxdb import InfluxDBClient
 from pymongo import MongoClient
 import json
 from urllib.parse import urlparse
-
+import re
 #selenium webdriver has no builtin function to check whether an element exists or not
 # this is why this function was implemented
 # it tries to find an element by xpath
 # if the element does not exist
 # NoSuchElementException will be raised and the function will catch that exception and
 # and return false
+
+
 def check_exists_by_xpath(driver, xpath):
     try:
         driver.find_element_by_xpath(xpath)
@@ -249,20 +251,24 @@ def full_test(driver, domain_name, url):
 #     text_file = open("scraper/alexa_login.txt", "r")
 #     lines = text_file.read().split('\n')
 #     return lines
+#
+#         s = index['results']
+#         result = re.search('"link": ;(.*),', s)
+#         url = result.group(1)
+#         print(url)
 
 def get_legitimate_pages():
     jsonFile = open('scraper/legit_pages.json', 'r')
     data = json.load(jsonFile)
     jsonFile.close()
-    print(type(data))
     link_array = []
-
     for index in data:
-        link_array.append(index['result'])
+        if len(index['results']) != 0:
+            results = index['results']
+            for result in results:
+                link_array.append(result['link'])
 
-    print((link_array))
-
-    # return link_array
+    return link_array
 
 # our ruby scraper will scrape phishtank and will return all phishing links
 # in JSON form mait in 'links-old.json' file
