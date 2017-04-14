@@ -61,17 +61,26 @@ def email_and_password_exits(driver):
 # this function will take fake credentials (email, username .. etc)
 # and will first clear the text input field then add
 # the fake email
-def test_fake_credentials(driver,test_email,xpath):
+def test_fake_credentials(driver,test_email,xpath,count):
     try:
         user = driver.find_element_by_xpath(xpath)
-        user.clear()
+        if count > 0:
+            try:
+                user.clear()
+            except:
+                pass
         user.send_keys(test_email)  # Your email_id
     except ElementNotVisibleException:
         pass
 
 # this function will get the password type field and will input a fake password
-def test_fake_password(driver):
+def test_fake_password(driver,count):
     passwd = driver.find_element_by_xpath(passwd_xpath)
+    if count > 0:
+        try:
+            passwd.clear()
+        except:
+            pass
     passwd.send_keys("Hello12345")  # Your password
     passwd.send_keys(Keys.RETURN)
     WebDriverWait(driver, 2)
@@ -174,27 +183,27 @@ def full_test(driver, domain_name, url):
                 domain = get_domain_from_uri(driver.current_url)
 
                 if email_type:
-                    test_fake_credentials(driver, email_list[count],email_type_xpath)
+                    test_fake_credentials(driver, email_list[count],email_type_xpath, count)
 
                 elif email_id:
-                    test_fake_credentials(driver, email_list[count],email_id_xpath)
+                    test_fake_credentials(driver, email_list[count],email_id_xpath, count)
 
                 elif email_name:
-                    test_fake_credentials(driver, email_list[count],email_name_xpath)
+                    test_fake_credentials(driver, email_list[count],email_name_xpath, count)
 
                 elif user_id:
-                    test_fake_credentials(driver, email_list[count],userId_xpath)
+                    test_fake_credentials(driver, email_list[count],userId_xpath, count)
 
                 elif user_name:
-                    test_fake_credentials(driver, email_list[count],user_name_xpath)
+                    test_fake_credentials(driver, email_list[count],user_name_xpath, count)
 
                 elif username_name:
-                    test_fake_credentials(driver, email_list[count],username_name_xpath)
+                    test_fake_credentials(driver, email_list[count],username_name_xpath, count)
 
                 elif text_type :
-                    test_fake_credentials(driver, email_list[count],text_type_xpath)
+                    test_fake_credentials(driver, email_list[count],text_type_xpath, count)
 
-                test_fake_password(driver)
+                test_fake_password(driver, count)
 
                 # if selenium injects the website with an email and password
                 # and a redirect occurs this is for sure a phishing website
