@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Importing libraries for web driver
 # the selenium web driver module provides all the web driver implementations.
 # current supported implementations are firefox, chrome and IE
