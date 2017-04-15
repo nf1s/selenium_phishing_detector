@@ -35,6 +35,8 @@ def check_exists_by_xpath(driver, xpath):
 # according to their Xpath
 input_tag_xpath = "//input"
 text_type_xpath = "//input[@type='text']"
+text_type_xpath_1 = "//input[@type='text'][1]"
+text_type_xpath_2 = "//input[@type='text'][2]"
 email_type_xpath = "//input[@type='email']"
 email_id_xpath = "//input[@id='email']"
 email_name_xpath = "//input[@name='email']"
@@ -75,6 +77,8 @@ def test_fake_credentials(driver,test_email,xpath,count):
                 pass
         user.send_keys(test_email)  # Your email_id
     except ElementNotVisibleException:
+        pass
+    except NoSuchElementException:
         pass
 
 # this function will get the password type field and will input a fake password
@@ -212,7 +216,8 @@ def full_test(driver, domain_name, url):
 
                     elif text_type :
                         test_fake_credentials(driver, email_list[count],text_type_xpath, count)
-
+                        test_fake_credentials(driver, email_list[count], text_type_xpath_1, count)
+                        test_fake_credentials(driver, email_list[count], text_type_xpath_2, count)
 
                     test_fake_password(driver, count)
 
