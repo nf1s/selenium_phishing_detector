@@ -92,6 +92,10 @@ def test_fake_password(driver,count):
     WebDriverWait(driver, 2)
     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
+
+def find_elements(driver):
+    elements = driver.find_elements(By.XPATH, '//input')
+    print(elements)
 # this function returns a list of fake emails for testing
 def test_email_list():
     emails = ['some_email@nicedomain.com', 'happy.forever@best.com', 'python@great.com', 'first.last@name.com']
@@ -209,6 +213,9 @@ def full_test(driver, domain_name, url):
                 elif text_type :
                     test_fake_credentials(driver, email_list[count],text_type_xpath, count)
 
+                else:
+                    find_elements(driver)
+
                 test_fake_password(driver, count)
 
                 # if selenium injects the website with an email and password
@@ -312,10 +319,10 @@ def run():
         if link != old_link:
             if link is not None and link != '':
                 driver = webdriver.Firefox()
+                url = link
+                domain = get_domain_from_uri(url)
                 try:
-                    url = link
                     driver.get(url)
-                    domain = get_domain_from_uri(url)
                     print(domain)
                     domain_in_whiteList = check_domain_in_white_list(domain)
                     if domain_in_whiteList != None:
@@ -326,8 +333,13 @@ def run():
                         to_influx_database(url, result)
 
                 except TimeoutException as error:
-                    print('there is a timeout exception here'+str(error))
-                    to_influx_database(link, -1)
+                    WebDriverWait(driver,1)
+                    if check_exists_by_xpath(driver,passwd_xpath):
+                        print('domain is legit')
+                        to_mongodb(domain,url)
+                    else:
+                        print('there is a timeout exception here'+str(error))
+                        to_influx_database(link, -1)
                     pass
                 except WebDriverException as error:
                     print('webdriver exception here'+str(error))

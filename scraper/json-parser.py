@@ -39,4 +39,13 @@ def legit_to_db():
         domain = line.replace(" ", "")
         to_mongodb(domain)
 
-legit_to_db()
+def mongo_to_json():
+    db_client = MongoClient()
+    db = db_client.phishing
+    cursor = db.whitelist.find()
+    for link in cursor:
+        print(link['legitimate']['url'])
+    # return cursor
+
+mongo_to_json()
+# legit_to_db()
