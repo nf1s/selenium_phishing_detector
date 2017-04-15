@@ -35,8 +35,6 @@ def check_exists_by_xpath(driver, xpath):
 # according to their Xpath
 input_tag_xpath = "//input"
 text_type_xpath = "//input[@type='text']"
-text_type_xpath_1 = "//input[@type='text'][1]"
-text_type_xpath_2 = "//input[@type='text'][2]"
 email_type_xpath = "//input[@type='email']"
 email_id_xpath = "//input[@id='email']"
 email_name_xpath = "//input[@name='email']"
@@ -216,8 +214,7 @@ def full_test(driver, domain_name, url):
 
                     elif text_type :
                         test_fake_credentials(driver, email_list[count],text_type_xpath, count)
-                        test_fake_credentials(driver, email_list[count], text_type_xpath_1, count)
-                        test_fake_credentials(driver, email_list[count], text_type_xpath_2, count)
+
 
                     test_fake_password(driver, count)
 
@@ -263,20 +260,25 @@ def full_test(driver, domain_name, url):
         return 0
 
     else:
-        print('random error')
+        # if count > 1 and password:
+        #     print('this is a legitimate page')
+        #     to_mongodb(domain_name, url)
+        #     return 0
+        # else:
+            print('random error')
 
 
 # our scraper for alexsa 500 saves the legit websites in a text file
 # this function opens the txt file, extracts the domains and append it to an array
 
 def get_legitimate_pages():
-    text_file = open("scraper/new_legit.txt", "r")
+    text_file = open("scraper/legit_links.txt", "r")
     lines = text_file.read().split('\n')
     return lines
 
-
+#
 # def get_legitimate_pages():
-#     jsonFile = open('scraper/legit_pages.json', 'r')
+#     jsonFile = open('scraper/output2.json', 'r')
 #     data = json.load(jsonFile)
 #     jsonFile.close()
 #     link_array = []
@@ -302,8 +304,6 @@ def get_phishing_pages():
     for index in data:
         link_array.append(index['url'])
 
-    print(len(link_array))
-
     return link_array
 
 # this is our main function
@@ -320,6 +320,7 @@ def run():
         link_array = get_legitimate_pages()
     else:
         link_array = get_phishing_pages()
+    print(len(link_array))
     old_link = ''
     for link in link_array:
         print(link)
@@ -330,7 +331,7 @@ def run():
                 domain = get_domain_from_uri(url)
                 try:
                     driver.get(url)
-                    print(domain)
+                    print('testing .... '+domain)
                     domain_in_whiteList = check_domain_in_white_list(domain)
                     if domain_in_whiteList != None:
                         print('domain is legit and in whitelist')
