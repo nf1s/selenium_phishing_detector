@@ -93,9 +93,7 @@ def test_fake_password(driver,count):
     WebDriverWait(driver, 5).until(EC.staleness_of(passwd))
 
 
-def find_elements(driver):
-    elements = driver.find_elements(By.XPATH, '//input')
-    print(elements)
+
 # this function returns a list of fake emails for testing
 def test_email_list():
     emails = ['some_email@nicedomain.com', 'happy.forever@best.com', 'python@great.com', 'first.last@name.com']
@@ -186,56 +184,62 @@ def full_test(driver, domain_name, url):
 
     # the loop will continue to test the website as long as
     # there is an input field and password
-    while input_tag and count < 3:
+    try:
 
-        if password:
+        while input_tag and count < 3:
 
-                domain = get_domain_from_uri(driver.current_url)
+            if password:
 
-                if email_type:
-                    test_fake_credentials(driver, email_list[count],email_type_xpath, count)
+                    domain = get_domain_from_uri(driver.current_url)
 
-                elif email_id:
-                    test_fake_credentials(driver, email_list[count],email_id_xpath, count)
+                    if email_type:
+                        test_fake_credentials(driver, email_list[count],email_type_xpath, count)
 
-                elif email_name:
-                    test_fake_credentials(driver, email_list[count],email_name_xpath, count)
+                    elif email_id:
+                        test_fake_credentials(driver, email_list[count],email_id_xpath, count)
 
-                elif user_id:
-                    test_fake_credentials(driver, email_list[count],userId_xpath, count)
+                    elif email_name:
+                        test_fake_credentials(driver, email_list[count],email_name_xpath, count)
 
-                elif user_name:
-                    test_fake_credentials(driver, email_list[count],user_name_xpath, count)
+                    elif user_id:
+                        test_fake_credentials(driver, email_list[count],userId_xpath, count)
 
-                elif username_name:
-                    test_fake_credentials(driver, email_list[count],username_name_xpath, count)
+                    elif user_name:
+                        test_fake_credentials(driver, email_list[count],user_name_xpath, count)
 
-                elif text_type :
-                    test_fake_credentials(driver, email_list[count],text_type_xpath, count)
+                    elif username_name:
+                        test_fake_credentials(driver, email_list[count],username_name_xpath, count)
 
-                else:
-                    find_elements(driver)
+                    elif text_type :
+                        test_fake_credentials(driver, email_list[count],text_type_xpath, count)
 
-                test_fake_password(driver, count)
 
-                # if selenium injects the website with an email and password
-                # and a redirect occurs this is for sure a phishing website
-                newDomain = get_domain_from_uri(driver.current_url)
+                    test_fake_password(driver, count)
 
-                if newDomain != domain:
-                    print('this is a phishing website because of redirect')
-                    return 1
-                else:
-                    count += 1
-                    #rechecking again what are the elements exist in the page before the next iteration
-                    input_tag,text_type, email_type, email_id, email_name, \
-                    user_id, user_name, username_name, \
-                    password = email_and_password_exits(driver)
+                    # if selenium injects the website with an email and password
+                    # and a redirect occurs this is for sure a phishing website
+                    newDomain = get_domain_from_uri(driver.current_url)
 
-        else:
-            break
-    #if this was the first iteration and there is not login fields
-    # then this page has no login
+                    if newDomain != domain:
+                        print('this is a phishing website because of redirect')
+                        return 1
+                    else:
+                        count += 1
+                        #rechecking again what are the elements exist in the page before the next iteration
+                        input_tag,text_type, email_type, email_id, email_name, \
+                        user_id, user_name, username_name, \
+                        password = email_and_password_exits(driver)
+
+            else:
+                break
+
+    except TimeoutException as error:
+        if password and count > 0:
+            print('this is a legitimate page')
+            to_mongodb(domain_name, url)
+            return 0
+        #if this was the first iteration and there is not login fields
+# then this page has no login
     if count < 1 and (not email_type or not email_id or not email_name) and not password:
         print('this page has no login')
         return 2
@@ -256,30 +260,28 @@ def full_test(driver, domain_name, url):
     else:
         print('random error')
 
+
 # our scraper for alexsa 500 saves the legit websites in a text file
 # this function opens the txt file, extracts the domains and append it to an array
-# def get_legitimate_pages():
-#     text_file = open("scraper/alexa_login.txt", "r")
-#     lines = text_file.read().split('\n')
-#     return lines
-#
-#         s = index['results']
-#         result = re.search('"link": ;(.*),', s)
-#         url = result.group(1)
-#         print(url)
 
 def get_legitimate_pages():
-    jsonFile = open('scraper/legit_pages.json', 'r')
-    data = json.load(jsonFile)
-    jsonFile.close()
-    link_array = []
-    for index in data:
-        if len(index['results']) != 0:
-            results = index['results']
-            for result in results:
-                link_array.append(result['link'])
+    text_file = open("scraper/new_legit.txt", "r")
+    lines = text_file.read().split('\n')
+    return lines
 
-    return link_array
+
+# def get_legitimate_pages():
+#     jsonFile = open('scraper/legit_pages.json', 'r')
+#     data = json.load(jsonFile)
+#     jsonFile.close()
+#     link_array = []
+#     for index in data:
+#         if len(index['results']) != 0:
+#             results = index['results']
+#             for result in results:
+#                 link_array.append(result['link'])
+#
+#     return link_array
 
 # our ruby scraper will scrape phishtank and will return all phishing links
 # in JSON form mait in 'links-old.json' file
@@ -333,13 +335,8 @@ def run():
                         to_influx_database(url, result)
 
                 except TimeoutException as error:
-                    WebDriverWait(driver,1)
-                    if check_exists_by_xpath(driver,passwd_xpath):
-                        print('domain is legit')
-                        to_mongodb(domain,url)
-                    else:
-                        print('there is a timeout exception here'+str(error))
-                        to_influx_database(link, -1)
+                    print('there is a timeout exception here'+str(error))
+                    to_influx_database(link, -1)
                     pass
                 except WebDriverException as error:
                     print('webdriver exception here'+str(error))
