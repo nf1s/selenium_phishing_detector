@@ -7,7 +7,6 @@ https://myaccount.nytimes.com/auth/login
 https://a.jimdo.com/app/auth/signin/index/l/en_US
 https://www.bbc.com/signin
 https://github.com/login
-https://www.123-reg.co.uk/public/login
 https://www.imdb.com/ap/signin?clientContext=134-8004907-5306867&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.imdb.com%2Fap-signin-handler&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=imdb_us&openid.mode=checkid_setup&siteState=eyJyZWRpcmVjdFRvIjoiaHR0cHM6Ly93d3cuaW1kYi5jb20vP3JlZl89bG9naW4ifQ&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&&tag=imdbtag_reg-20  
 https://vimeo.com/log_in
 https://passport.yandex.ru/passport?mode=auth&retpath=https%3A%2F%2Fmail.yandex.ru%2Flite%2Finbox
@@ -20,7 +19,6 @@ https://app.content.ad/
 https://tickets.harthouse.ca/Online/login.asp
 https://abdn.targetconnect.net/graduate/login.html
 http://www.mysmps.org/login?ReturnURL=http%3A%2F%2Fwww.mysmps.org%2Fhome
-https://sedo.com/auth/login;jsessionid=15A987F1A6348A40C2625D5B4965DA74?locale=en_US
 https://dit.gradireland.com/graduate/login.html
 https://login.exacteditions.com/checkAgency.do?titleId=22115
 https://metergroup.applicantpro.com/account/login.php
@@ -46,7 +44,6 @@ https://www.lulu.com/account/sign-in
 https://app.receipt-bank.com/
 https://core.futuresimple.com/sales/users/login
 http://www.google.ee/url?url=http://jobs.aventure.com/index.smpl%3Farg%3Duser_login&rct=j&frm=1&q=&esrc=s&sa=U&ved=0ahUKEwj35fje5aTTAhXCfywKHdD5Aqw47AQQFggeMAI&usg=AFQjCNE2UA9gPEvb644P01NSwCsd7EZTjQ
-https://trading.credentialdirect.com/login.aspx?cu=01432-828
 https://engage.highpoint.edu/user-login
 https://north-a-60ols.csi-cloudapp.net/csu/Employees/Login.aspx?isKiosk=False
 https://login.usu.edu/
@@ -56,19 +53,15 @@ https://www.2checkout.com/va
 https://www.wrike.com/login/
 https://www.gobi3.com/Pages/Login.aspx
 https://accounts.nintendo.com/login?lang=en-US
-https://learning.greeneconsults.com/topclass/login.do?c=utsa
 https://ldaps.sonoma.edu/portal/
 https://connect.mitel.com/
 https://angel.co/login
 https://login.norton.com/
-https://console.appnexus.com/
 https://app.pipedrive.com/auth/login
 https://moz.com/login
-https://my.bigcartel.com/
 https://secure.meetup.com/login/
 https://cloud.digitalocean.com/login
 https://signin.infusionsoft.com/
-https://sso.godaddy.com/login?app=email&realm=pass
 https://www.olark.com/login
 https://account.meraki.com/secure/login/dashboard_login
 https://app.wodify.com/
@@ -101,7 +94,6 @@ https://digication.ct.edu/index.php?cl=NKCC
 https://business.ohio.edu/resources/mail-login/
 https://studio.shootproof.com/
 https://secure.americananthro.org/eweb/
-https://l.deviantart.com/
 https://www.geni.com/login
 https://my.sa.ucsb.edu/gold/login.aspx
 https://sso.carlsonwagonlit.com/
@@ -116,7 +108,6 @@ https://my.icaew.com/security
 https://cdp.dhs.gov/sso/login
 https://www.brighttalk.com/login
 https://www.bniconnectglobal.com/web/open/login
-https://email.secureserver.net/
 https://cunyportal.cuny.edu/
 http://www.thetablet.co.uk/account/login
 https://myaccount.avg.com/
@@ -144,7 +135,6 @@ http://www.bva.bund.de/Login/Login/login_node.html
 https://i.huanqiu.com/
 https://recruitingapp-2630.umantis.com/SelfService/MyProfile?customer
 https://www.openstreetmap.org/login?cookie_test=true&referer=%2F
-https://i.aol.com/
 http://m.facebook.com/
 https://portal.wesleycollege.net/
 https://hootsuite.com/login
@@ -155,7 +145,6 @@ https://login.uber.com/login
 https://www.maxcntr.com/login
 https://login.libero.it/
 https://account.my.com/de/login/
-https://sso.secureserver.net/
 https://login.hostclear.com/
 https://www.edoc9.com/
 https://www.solo-cloud.com/
@@ -195,7 +184,6 @@ https://www.88sears.com/login
 http://www.tclogin.com/
 http://build.zapable.com/login/
 https://www.rockettheme.com/login
-https://login.sportngin.com/
 https://www.feddir.net/login.asp
 https://sitemail.hostway.com/
 https://bosse.ee/et/sendfriend/product/send/id/6088/
@@ -215,9 +203,7 @@ http://user.qmsaltd.com/user/login.php
 https://weedmaps.com/login
 https://www.ayaibanking.com/ibLogin.aspx
 https://www.myporthos.com/
-https://aimsweb.pearson.com/
 https://www.revcontent.com/login
-https://login.iress.com.au/
 http://m.egwebtid.dk/
 http://notes.dunkirk.wnyric.org/
 https://icpauportal.com/
@@ -228,7 +214,6 @@ http://login.myhourdoc.com/
 https://login.fusemail.com/
 https://www.startcompass.com/
 https://portal.clientwhys.com/
-http://www.palksimoto.com/login.php
 https://gcccd.blackboard.com/
 https://my.americorps.gov/
 https://a1.massresponse.com/login/
@@ -239,7 +224,6 @@ https://portal.hosting.com/login
 http://login.easypurl.com/
 http://www.protexcrm.it/
 https://mysolar.sunedison.com/
-https://www.maintenancelogin.com/Login.aspx
 http://admin.unwire.com/
 http://www.noodletools.com/login.php
 http://www.shopatron.com/login
@@ -247,7 +231,6 @@ https://enterprisepaymentprocessing.suntrust.com/
 https://login-eircom.cloud.xirrus.com/
 https://www.streamlineworkspace.com/login.php
 http://login.xirrus.com/
-http://dmr.regs4ships.com/login.cfm
 http://www.rawfoodiez.com/campaigns
 https://edeskv2.belden.com/
 https://login.peqasus.com/
@@ -271,7 +254,6 @@ https://www1.directatrading.com/
 http://login.fleettrax.net/
 https://nuigalway.blackboard.com/
 http://ovidsp.ovid.com/
-http://login.fortissimmo.net/
 https://secure.uasc.com/uninet/login.aspx
 https://swm.etech.net/Login.aspx
 https://www.netwerkes.com/

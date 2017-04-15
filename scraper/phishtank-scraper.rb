@@ -3,7 +3,7 @@ require 'json'
 
 
 pt_scraper = PhishtankScraper.new
-submissions = pt_scraper.page_scrape((0..1), {active: "y", valid: "y"})
+submissions = pt_scraper.page_scrape((0..50), {active: "y", valid: "y"})
 submissions_json = submissions.to_json
 #puts (submissions_json)
 begin
