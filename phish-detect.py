@@ -295,7 +295,7 @@ def get_legitimate_pages():
 # this function will open the json file and parse
 # the url links to an array
 def get_phishing_pages():
-    jsonFile = open('scraper/links-old.json', 'r')
+    jsonFile = open('scraper/links.json', 'r')
     data = json.load(jsonFile)
     jsonFile.close()
 
