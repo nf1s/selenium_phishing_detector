@@ -127,7 +127,6 @@ def to_influx_database(url, res):
         print(str(error))
 
 
-
 def start():
 
     urls = get_legit_pages()

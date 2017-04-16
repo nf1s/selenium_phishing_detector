@@ -30,6 +30,16 @@ def phsihing_to_db():
         to_mongodb(link)
         print(link)
 
+def get_phishing():
+    jsonFile = open('links-old.json', 'r')
+    data = json.load(jsonFile)
+    jsonFile.close()
+
+    link_array = []
+
+    for index in data:
+        print(index['url'])
+
 
 def legit_to_db():
     text_file = open("file.txt", "r")
@@ -47,5 +57,6 @@ def mongo_to_json():
         print(link['legitimate']['url'])
     # return cursor
 
-mongo_to_json()
+# mongo_to_json()
 # legit_to_db()
+get_phishing()
