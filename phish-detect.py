@@ -320,7 +320,7 @@ def run():
         link_array = get_legitimate_pages()
     else:
         link_array = get_phishing_pages()
-    print(len(link_array))
+    print('test started with '+str(len(link_array))+' pages')
     old_link = ''
     for link in link_array:
         print(link)
@@ -356,5 +356,5 @@ def run():
 
                 driver.quit()
                 old_link = link
-
+    print('test sucessfully finished')
 run()
