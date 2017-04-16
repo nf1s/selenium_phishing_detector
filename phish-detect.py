@@ -14,7 +14,8 @@ from influxdb import InfluxDBClient
 from pymongo import MongoClient
 import json
 from urllib.parse import urlparse
-import re
+import url_analysis
+
 #selenium webdriver has no builtin function to check whether an element exists or not
 # this is why this function was implemented
 # it tries to find an element by xpath
@@ -324,6 +325,11 @@ def run():
     old_link = ''
     for link in link_array:
         print(link)
+        analysis = url_analysis.check(link)
+        if analysis >= 7 :
+            print('this is a phishing website domain analysis')
+            to_influx_database(link, 1)
+            continue
         if link != old_link:
             if link is not None and link != '':
                 driver = webdriver.Firefox()
@@ -335,6 +341,7 @@ def run():
                     domain_in_whiteList = check_domain_in_white_list(domain)
                     if domain_in_whiteList != None:
                         print('domain is legit and in whitelist')
+                        to_influx_database(link, 0)
                     else:
                         WebDriverWait(driver,2)
                         result = full_test(driver, domain, url)
