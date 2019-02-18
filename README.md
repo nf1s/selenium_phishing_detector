@@ -10,14 +10,14 @@ Use `Python 2.7` for back-end
 
 All the requirements have been described in `requirements.txt`. Make sure you add all your back-end requirements there as well!
 Initial requirements include:
-- [selenium](https://selenium-python.readthedocs.io/) Selenium web driver
+- [Selenium](https://selenium-python.readthedocs.io/) Selenium web driver
 - [Alexa_scrapper](https://github.com/vivekpatani/alexa-scraper) Scrapper for Alexa to get new Legit webpages
 - [Google_scrapper](https://www.django-rest-framework.org/) Scrapper for google
 - [MongoDB](https://www.mongodb.com/) Main database
 - [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) Logging Database
-- [graphana](http://docs.grafana.org/) Graph server for Influx db to show log data
-- [dnspython](http://www.dnspython.org/examples.html) Dns package for python
-- [whois](https://pypi.org/project/whois/) whois python package
+- [Qraphana](http://docs.grafana.org/) Graph server for Influx db to show log data
+- [Dnspython](http://www.dnspython.org/examples.html) Dns package for python
+- [Whois](https://pypi.org/project/whois/) whois python package
 
  Scrapping login pages from google
 
