@@ -1,1 +1,1 @@
- GoogleScraper -m http --keyword "login" -n 10 -p 1000 --num-workers 10 --search-engines "google" --output-filename output2.json
+ GoogleScraper -m http --keyword "login" -n 10 -p 1000 --num-workers 10 --search-engines "google" --output-filename legit.json
