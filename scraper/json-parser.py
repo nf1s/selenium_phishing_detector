@@ -16,7 +16,7 @@ def to_mongodb(domain):
 
 
 def phsihing_to_db():
-    jsonFile = open('links-old.json', 'r')
+    jsonFile = open('phishtank/links.json', 'r')
     data = json.load(jsonFile)
     jsonFile.close()
 

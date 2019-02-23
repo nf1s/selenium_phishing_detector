@@ -1,3 +1,3 @@
 #!/bin/bash
-ruby ./phishtank-scraper.rb/
+ruby ./phishtank/phishtank-scraper.rb
 python ./json-parser.py
