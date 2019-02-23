@@ -75,9 +75,10 @@ def check(url):
         2. url chars like ".", "-", "@"
 
     Args:
-        url:
+        url: (str) Url
 
     Returns:
+        int: number representing the total weight if phishing possibility
 
     """
     count = 0

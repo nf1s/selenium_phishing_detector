@@ -1,5 +1,6 @@
-from pymongo import MongoClient
 import json
+
+from pymongo import MongoClient
 
 
 def to_mongodb(domain):
@@ -13,6 +14,7 @@ def to_mongodb(domain):
         }
     )
 
+
 def phsihing_to_db():
     jsonFile = open('links-old.json', 'r')
     data = json.load(jsonFile)
@@ -25,13 +27,13 @@ def phsihing_to_db():
 
     print (len(link_array))
 
-
     for link in link_array:
         to_mongodb(link)
         print(link)
 
+
 def get_phishing():
-    jsonFile = open('links-old.json', 'r')
+    jsonFile = open('phishtank/links.json', 'r')
     data = json.load(jsonFile)
     jsonFile.close()
 
@@ -49,6 +51,7 @@ def legit_to_db():
         domain = line.replace(" ", "")
         to_mongodb(domain)
 
+
 def mongo_to_json():
     db_client = MongoClient()
     db = db_client.phishing
@@ -56,6 +59,7 @@ def mongo_to_json():
     for link in cursor:
         print(link['legitimate']['url'])
     # return cursor
+
 
 # mongo_to_json()
 # legit_to_db()
