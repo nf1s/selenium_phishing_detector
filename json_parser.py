@@ -1,9 +1,23 @@
+# -*- coding: utf-8 -*-
+"""json_parser Module.
+
+This module is created to parse both phishing and legit web-pages and add them to MongoDB.
+
+
+"""
+
 import json
 
 from pymongo import MongoClient
 
 
 def to_mongodb(domain):
+    """ Funtion add domain to MongoDB
+
+    Args:
+        domain: (str) Domain name
+
+    """
     db_client = MongoClient()
     db = db_client.phishing
     db.whitelist.insert_one(
@@ -16,6 +30,10 @@ def to_mongodb(domain):
 
 
 def phsihing_to_db():
+    """Get scrapped phishtank Json file, parses JSON
+    and adds links to MongoDB
+
+    """
     jsonFile = open('phishtank/links.json', 'r')
     data = json.load(jsonFile)
     jsonFile.close()
@@ -29,38 +47,15 @@ def phsihing_to_db():
 
     for link in link_array:
         to_mongodb(link)
-        print(link)
-
-
-def get_phishing():
-    jsonFile = open('phishtank/links.json', 'r')
-    data = json.load(jsonFile)
-    jsonFile.close()
-
-    link_array = []
-
-    for index in data:
-        print(index['url'])
 
 
 def legit_to_db():
-    text_file = open("file.txt", "r")
+    """Get Legit pages from scrapper and adds it to MongoDB
+
+    """
+    text_file = open("alexa/legit.txt", "r")
     lines = text_file.read().split('\n')
 
     for line in lines:
         domain = line.replace(" ", "")
         to_mongodb(domain)
-
-
-def mongo_to_json():
-    db_client = MongoClient()
-    db = db_client.phishing
-    cursor = db.whitelist.find()
-    for link in cursor:
-        print(link['legitimate']['url'])
-    # return cursor
-
-
-# mongo_to_json()
-# legit_to_db()
-get_phishing()

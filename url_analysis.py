@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""json_parser Module.
+
+This module is created to analysing urls and decide whether a given url is for phishing purposes
+
+
+"""
 import datetime
 
 import whois
