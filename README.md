@@ -1,9 +1,10 @@
 # Selenium-Phishing-Detector
 
-![alt Selenium](./res/selenium.png| width=100)
-![alt InfluxDB](./res/influx.png | width=100)
-![alt Graphana](./res/graphana.png | width=100)
-![alt MongoDB](./res/mongodb.png | width=100)
+![alt Python](./res/python.png)
+![alt Selenium](./res/selenium.png)
+![alt InfluxDB](./res/influxdb.png)
+![alt Graphana](./res/graphana.png)
+![alt MongoDB](./res/mongodb.png)
 
 
 ## Project overview
