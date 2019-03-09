@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """Phish_detect Module.
 
-# the selenium web driver module provides all the web driver implementations.
-# current supported implementations are firefox, chrome and IE
-# it case be used remotely as well
+The selenium web driver module provides all the web driver implementations.
+Current supported implementations are firefox, chrome and IE
+it can be used remotely as well
 
 """
 import json
+from urllib.parse import urlparse
 
 from influxdb import InfluxDBClient
 from pymongo import MongoClient
@@ -17,7 +18,6 @@ from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from urllib.parse import urlparse
 
 import url_analysis
 
@@ -451,7 +451,7 @@ def run():
                     print('webdriver exception here' + str(error))
                     pass
                 except ValueError or TypeError or UnicodeDecodeError as error:
-                    print ('value error or type error: ' + str(error))
+                    print('value error or type error: ' + str(error))
                     continue
                 except Exception as error:
                     print('total random exception: ' + str(error))
