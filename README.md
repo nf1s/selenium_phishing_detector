@@ -13,7 +13,9 @@
 
 ### Setup
 
-Use `Python 2.7`
+Use `Python 3.6`
+
+    pip install -r requirements.txt
 
 Built With:
 
