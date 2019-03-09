@@ -1,5 +1,11 @@
 # Selenium-Phishing-Detector
 
+![alt Selenium](./res/selenium.png| width=100)
+![alt InfluxDB](./res/influx.png | width=100)
+![alt Graphana](./res/graphana.png | width=100)
+![alt MongoDB](./res/mongodb.png | width=100)
+
+
 ## Project overview
 - A New Heuristic Based Phishing Detection Approach Utilizing Selenium Web-driver
 - [Publication at University of Tartu](http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=58598&year=2017)
@@ -15,7 +21,7 @@ Initial requirements include:
 - [Google_scrapper](https://www.django-rest-framework.org/) Scrapper for google
 - [MongoDB](https://www.mongodb.com/) Main database
 - [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) Logging Database
-- [Qraphana](http://docs.grafana.org/) Graph server for Influx db to show log data
+- [Graphana](http://docs.grafana.org/) Graph server for Influx db to show log data
 - [Dnspython](http://www.dnspython.org/examples.html) Dns package for python
 - [Whois](https://pypi.org/project/whois/) whois python package
 
@@ -32,7 +38,7 @@ scrapping Phishing pages from phishtank
 
     python phish_detect.py
     
-Run Grapaha and check results 
+Run Graphana and check results 
     
     http://localhost:3306 
 
