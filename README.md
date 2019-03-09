@@ -13,10 +13,10 @@
 
 ### Setup
 
-Use `Python 2.7` for back-end
+Use `Python 2.7`
 
-All the requirements have been described in `requirements.txt`. Make sure you add all your back-end requirements there as well!
-Initial requirements include:
+Built With:
+
 - [Selenium](https://selenium-python.readthedocs.io/) Selenium web driver
 - [Alexa_scrapper](https://github.com/vivekpatani/alexa-scraper) Scrapper for Alexa to get new Legit webpages
 - [Google_scrapper](https://www.django-rest-framework.org/) Scrapper for google
